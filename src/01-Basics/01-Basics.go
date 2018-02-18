@@ -3,7 +3,15 @@ package main
 import (
 	"fmt"
 	"math/cmplx"
+	"runtime"
+	"time"
 )
+
+// General Information about Go
+// ----------------------------
+// 1. Each Go program starts running in package main.
+// 2. Capital letters are exported names, Lowercase are not exported; public vs. private
+
 
 // Adds two integers together and returns an integer
 func add(x int, y int) int {
@@ -53,18 +61,83 @@ func ForLoops() {
 	}
 	fmt.Printf("The sum after the for loop is %d\n", sum)
 	
-	// The init and post statements are optional!!
+	// The init and post statements are optional
 	sumA := 1
 	for ; sumA < 1000; {
 		sumA += sumA
 	}
-	fmt.Printf("The sum after the second for loop is %d", sumA)
+	fmt.Printf("The sum after the second for loop is %d\n", sumA)
+	
+	// For is also While, just drop the semicolons 
+	sumB := 1
+	for sumB < 1000 {
+		sumB += sumB
+	}
+	fmt.Printf("The sum after the while loop is %d\n", sumB)
+
+	// See the func ForeverLoops for an example of an infinite loop.
+	
+}
+
+func ForeverLoops() {
+	// Omit the loop condition and an infinite loop is expressed.
+	for {
+
+	}
+}
+
+func IfLogic() {
+	// Like for loops, logic in an if does not need parenthesis like other languages.
+	x := 2
+	if x < 0 {
+		fmt.Println("x was less than 2")
+	}
+	
+	// If statements can contain short statements which execute before the condition.  Here 
+	// we set v to 2 times that of x then check to see if it is greater than 3 which it should be.
+	// Variables, like v, declared by the statement are only in scope until the end of the if/else.  
+	// In this example we also demonstrate the use of else.  
+	if v := x * 2 ; v > 3 {
+		fmt.Printf("v is %d so we made it in the if statement.", v)
+	} else {
+		fmt.Printf("v is greater than 3 becuase it is %d", v)
+	}
+}
+
+func UsingSwitch() {
+	// Switch is a shorter way to write a sequence of if statements.  The difference between 
+	// Go and other languages is that it only runs the selected case and not all cases that follow
+	// as other languages do.  A break statement is NOT required in Go, it takes care of that.  
+	// Another difference is that the case does not need to be a constant.  The order of evaluation
+	// if from top to bottom, stopping when a case succeeds so if the OS were "darwin" it would stop
+	// there and go no further.  
+	fmt.Print("Go runs on ")
+	switch os := runtime.GOOS; os {
+		case "darwin":
+			fmt.Println("OS X.")
+		case "linux":
+			fmt.Println("Linux.")
+		default: 
+			// all other possible OS
+			fmt.Printf("%s.", os)
+	}
+	
+	// Switch without a condition is the same as "switch true".  This construct can be a clean
+	// way to write long if-then-else chains.
+	t := time.Now()
+	switch {
+		case t.Hour() < 12: 
+			fmt.Println("Good morning!")
+		case t.Hour() < 17:
+			fmt.Println("Good afternoon.")
+		default: 
+			fmt.Println("Good evening.")
+	}
 }
 
 func main() {
 	
-	// 1. Each Go program starts running in package main.
-	// 2. Capital letters are exported names, Lowercase are not exported; public vs. private
+	
 	
 	fmt.Println("01-Basics Application")
 	fmt.Println(add(42, 13))
@@ -97,7 +170,19 @@ func main() {
 	// namespaces in other languages.  
 	fmt.Println(GetDB())
 	
-	// This func demonstrates For
+	// This func demonstrates For and While
 	ForLoops()
+	
+	// This func demonstrates If and Else
+	IfLogic()
+	
+	// This func demonstrates Switch
+	UsingSwitch()
+	
+	// Deferring execution until the surrounding function returns.  
+	defer fmt.Print("world. This was an example of the defer statemnt.")
+	fmt.Print("hello ")
+	
+	
 	
 }
