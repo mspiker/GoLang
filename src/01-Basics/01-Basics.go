@@ -39,6 +39,28 @@ var (
 // using the short assignment, or := syntax.
 const Pi = 3.14159267
 
+func ForLoops() {
+	sum := 0
+	
+	// The basic for loop has three components separated by semicolons.
+	//   - the init statement: executed before the first iteration
+	//        - variables declared are visible only in the scope of the for statement
+	//   - the condition expression: evaluated before every iteration
+	//   - the post statement: executed at the end of every iteration
+	// Unlike other languages, no parenthesis surround the three components, braces { } are always required.
+	for i := 0; i < 10; i++ {
+		sum += i
+	}
+	fmt.Printf("The sum after the for loop is %d\n", sum)
+	
+	// The init and post statements are optional!!
+	sumA := 1
+	for ; sumA < 1000; {
+		sumA += sumA
+	}
+	fmt.Printf("The sum after the second for loop is %d", sumA)
+}
+
 func main() {
 	
 	// 1. Each Go program starts running in package main.
@@ -63,12 +85,19 @@ func main() {
 	fmt.Println(i, j)
 	fmt.Println(x, y)
 	
-	// Formatting printed values
+	// Formatting printed values, notice I am using Printf, not Println
 	fmt.Printf("Type: %T Value: %v\n", IsAuth, IsAuth)
 	fmt.Printf("Type: %T Value: %v\n", MaxInt, MaxInt)
 	fmt.Printf("Type: %T Value: %v\n", CplxNo, CplxNo)
 	fmt.Printf("Type: %T Value: %v\n", aRune, aRune)
 	fmt.Printf("Type: %T Value: %v\n", Zero, Zero)
 	
+	// This calls the func GetDB which lives in another file, see 02-MongoDb.go.  You will notice
+	// that the package name is the same and 02-MongoDb has no func call main().  This is much like
+	// namespaces in other languages.  
 	fmt.Println(GetDB())
+	
+	// This func demonstrates For
+	ForLoops()
+	
 }
