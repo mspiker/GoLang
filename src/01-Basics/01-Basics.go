@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/cmplx"
 )
 
 // Adds two integers together and returns an integer
@@ -22,6 +23,22 @@ func swap(x, y string) (string, string) {
 	return y, x
 }
 
+// Variable declarations can be factored into blocks, just like the import statements, variables
+// declared without an explicit initial value are given their zero value.  
+var (
+	IsAuth	bool		= false
+	MaxInt	uint64		= 1<<64 - 1					// Shifts the 1 bit left 100 places, in other
+													// words, the binary number that is 1 followed by
+													// 63 zeros.
+	CplxNo	complex128	= cmplx.Sqrt(-5 + 12i)
+	aRune	rune		= 'b'
+	Zero	int32
+)
+
+// Constants are just like variables, but with the const keyword.  You cannot declare constants
+// using the short assignment, or := syntax.
+const Pi = 3.14159267
+
 func main() {
 	
 	// 1. Each Go program starts running in package main.
@@ -30,5 +47,28 @@ func main() {
 	fmt.Println("01-Basics Application")
 	fmt.Println(add(42, 13))
 	fmt.Println(multiply(42, 13))
-	fmt.Println(swap("First Item", "Last Item"))
+	
+	// Example of a function returning more than one result, notice the use of := (short assignment)
+	// this eliminates the need to procede the line with var like I did declaring a and b.  Short
+	// assignments can only be used in a func, outsie a func every statement begins with a keyword.  
+	var a, b = swap("Item 1", "Item 2")
+	c, d := swap("Item 3", "Item 4")
+	fmt.Println(a, b)
+	fmt.Println(c, d)
+	
+	// Var declarations can include initializers
+	var i, j int = 1, 2
+	// If an initializer is present you can omit the type
+	var x, y = 2, 4
+	fmt.Println(i, j)
+	fmt.Println(x, y)
+	
+	// Formatting printed values
+	fmt.Printf("Type: %T Value: %v\n", IsAuth, IsAuth)
+	fmt.Printf("Type: %T Value: %v\n", MaxInt, MaxInt)
+	fmt.Printf("Type: %T Value: %v\n", CplxNo, CplxNo)
+	fmt.Printf("Type: %T Value: %v\n", aRune, aRune)
+	fmt.Printf("Type: %T Value: %v\n", Zero, Zero)
+	
+	fmt.Println(GetDB())
 }
