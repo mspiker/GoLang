@@ -3,8 +3,6 @@ package main
 import (
 	"time"
 	"log"
-	"gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
 )
 
 type Profile struct {
